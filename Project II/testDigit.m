@@ -1,6 +1,6 @@
 % Tests a handwritten digit against the average digits stored in T to
 % determine which it is closest to, in the sense of minimizing the norm
-% of the difference between the matrices (as in Exercise 17b ).
+% of the difference between the vectors (as in Exercise 17b ).
 
 function guess = testDigit(digit,T)
 d = double(digit);
