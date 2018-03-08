@@ -1,11 +1,9 @@
 % Project 2
 % Part (iii)
 
-
-
 function OUT = neuron(n, O, w)
 % n = number of connections
-% O = input vectors O_1, O_2, ..., O_n
+% O = input O_1, O_2, ..., O_n
 % w = input weights w_1, w_2, ..., w_n
 
 net = eye(n);
