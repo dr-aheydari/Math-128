@@ -1,18 +1,25 @@
-%neuronsInLayer = [49 7 10];
-%for i=1:size(neuronsInLayer)
-%    W = rand(
-%    for j=1:neuronsInLayer(i)
-        % some matrix (w_ij) with index i corresponding to the leaving
-        % neuron and index j corresponding to the entering neuron, and w_ij
-        % is the weight of each connection.
-        
+function OUT_LAYER = neuralNetwork(input,neuronsInLayer)
+% Input Layer gets initialized to "input" with no weights, and first hidden
+% layer gets the image of these values (weighted) as inputs.
 neuronOuts = zeros(784,1);
 for i=1:784
-neuronOuts(i) = neuron(1,train0(1,i),-1 + 2*rand(1));
+    % Using randomized weights for now
+    neuronOuts(i) = neuron(1,input(i),-1 + 2*rand(1));
 end
-%disp(neuronOuts)
-neuronOuts_2 = zeros(10,1);
-for i=1:10
-neuronOuts_2(i) = neuron(784,neuronOuts,-1 + 2*rand(784,1));
+
+neuronsInLayer = [784 neuronsInLayer];
+
+% Other Layers get output of previous layer as input, and output the
+% weighted image of these values.
+for j=2:size(neuronsInLayer,2)
+    neuronIns = neuronOuts;
+    newSize = neuronsInLayer(j);
+    oldSize = neuronsInLayer(j-1);
+    neuronOuts = zeros(newSize,1);
+    for i=1:newSize
+        % Using randomized weights for now
+        neuronOuts(i) = neuron(oldSize,neuronIns,-1 + 2*rand(oldSize,1));
+    end
+    %disp(neuronOuts)
 end
-disp(neuronOuts_2)
+OUT_LAYER = neuronOuts;
