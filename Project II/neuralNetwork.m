@@ -1,25 +1,20 @@
-function OUT_LAYER = neuralNetwork(input,neuronsInLayer)
-% Input Layer gets initialized to "input" with no weights, and first hidden
-% layer gets the image of these values (weighted) as inputs.
-neuronOuts = zeros(784,1);
-for i=1:784
-    % Using randomized weights for now
-    neuronOuts(i) = neuron(1,input(i),-1 + 2*rand(1));
-end
+% Neural Network
 
-neuronsInLayer = [784 neuronsInLayer];
+function outputs = Network(num_layers,input,weight)
 
-% Other Layers get output of previous layer as input, and output the
-% weighted image of these values.
-for j=2:size(neuronsInLayer,2)
-    neuronIns = neuronOuts;
-    newSize = neuronsInLayer(j);
-    oldSize = neuronsInLayer(j-1);
-    neuronOuts = zeros(newSize,1);
-    for i=1:newSize
-        % Using randomized weights for now
-        neuronOuts(i) = neuron(oldSize,neuronIns,-1 + 2*rand(oldSize,1));
-    end
-    %disp(neuronOuts)
+        outputs{1} = input;
+        net = input * weight{1};
+        outputs{2} = logsig(net);
+
+        % last layer is just the output layer
+        for i = 1:(num_layers - 1)
+             net = outputs{i + 1} * weight{i + 1};
+             outputs{i + 2} = logsig(net);
+        end
+
+% the given NET and OUT from the project descrip.
+net = outputs{length(weight)} * weight{length(weight)};
+outputs{num_layers + 2} = logsig(net);
+
+
 end
-OUT_LAYER = neuronOuts;
